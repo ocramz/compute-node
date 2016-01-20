@@ -8,7 +8,7 @@ RUN apt-key update
 RUN apt-get update
 
 # # Install compiler tools.
-RUN apt-get install -y --no-install-recommentds make gcc gfortran wget curl python pkg-config
+RUN apt-get install -y --no-install-recommends make gcc gfortran wget curl python pkg-config
 
 
 # # Set up environment variables
