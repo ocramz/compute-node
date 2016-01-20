@@ -10,3 +10,7 @@ services:
 
 script:
   - make build ACCOUNT=ocramz
+
+
+  # behold the result : 
+  - docker images
