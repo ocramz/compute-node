@@ -43,10 +43,10 @@ RUN apt-get clean
 
 # # test MUNGE
 
-RUN /usr/sbin/munged
+# RUN /usr/sbin/munged
 
-RUN munge -n | unmunge
+# RUN munge -n | unmunge
 
-RUN remunge
+# RUN remunge
 
 
