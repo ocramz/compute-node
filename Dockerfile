@@ -9,8 +9,8 @@ RUN apt-get install -y --no-install-recommends ca-certificates debian-keyring de
 RUN apt-key update
 RUN apt-get update
 
-# # Install compiler tools.
-RUN apt-get install -y --no-install-recommends make gcc gfortran wget curl python pkg-config
+# # Install tools.
+RUN apt-get install -y --no-install-recommends make gcc bzip2 gfortran wget curl python pkg-config
 
 
 # # Set up environment variables
@@ -28,7 +28,10 @@ RUN printenv | grep DIR
 RUN ls -lsA $HOME
 
 # # install SLURM + dependencies
-RUN apt-get install -y --no-install-recommends bzip2 munge-libs munge-devel munge lua-devel && \
-    curl -fsL http://www.schedmd.com/download/total/slurm-15.08.3.tar.bz2 | tar xfj - -C /opt/ && \
+RUN apt-get install -y --no-install-recommends libmunge-dev libmunge2 munge
+
+# RUN apt-get install -y --no-install-recommends lua-devel
+
+RUN apt-get install -y --no-install-recommends curl -fsL http://www.schedmd.com/download/total/slurm-15.08.3.tar.bz2 | tar xfj - -C /opt/ && \
     cd /opt/slurm-15.08.3/ && \
     ./configure && make && make install
