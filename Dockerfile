@@ -32,7 +32,7 @@ RUN apt-get install -y --no-install-recommends libmunge-dev libmunge2 munge
 
 # RUN apt-get install -y --no-install-recommends lua-devel
 
-RUN apt-get install -y --no-install-recommends slurm-wlm
+RUN apt-get install -y --no-install-recommends slurm-llnl
 
 # RUN apt-get install -y --no-install-recommends -fsL http://www.schedmd.com/download/total/slurm-15.08.3.tar.bz2 | tar xfj - -C /opt/ && \
 #     cd /opt/slurm-15.08.3/ && \
