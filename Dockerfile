@@ -1,3 +1,5 @@
+# # compute-node : a generic compute node image using Slurm and Munge
+
 FROM debian:7.7
 
 RUN apt-get update
@@ -22,8 +24,8 @@ RUN mkdir -p $BIN_DIR
 RUN mkdir -p $SRC_DIR
 
 # # check env
-printenv | grep DIR
-ls -lsA $HOME
+RUN printenv | grep DIR
+RUN ls -lsA $HOME
 
 # # install SLURM + dependencies
 RUN apt-get install -y --no-install-recommends bzip2 munge-libs munge-devel munge lua-devel && \
