@@ -38,3 +38,15 @@ RUN apt-get install -y --no-install-recommends slurm-llnl
 
 # # clean local package archive
 RUN apt-get clean
+
+
+
+# # test MUNGE
+
+RUN /usr/sbin/munged
+
+RUN munge -n | unmunge
+
+RUN remunge
+
+
