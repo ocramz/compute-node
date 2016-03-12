@@ -10,7 +10,7 @@ RUN apt-key update
 RUN apt-get -qq update
 
 # # Install tools
-RUN apt-get -qq install -y --no-install-recommends make gcc bzip2 gfortran wget curl python pkg-config perl alien
+RUN apt-get -qq install -y --no-install-recommends make gcc bzip2 gfortran wget curl python pkg-config perl
 
 # # # ==== kernel stuff
 # # RUN apt-get install linux-headers-$(uname -r)
@@ -72,8 +72,9 @@ RUN cat /proc/cmdline
 
 
 # # # ==== Consul
-RUN curl -L https://releases.hashicorp.com/consul/0.6.3/consul_0.6.3_linux_amd64.zip | tar xz -C $BIN_DIR
+RUN curl -L https://releases.hashicorp.com/consul/0.6.3/consul_0.6.3_linux_amd64.zip | unzip -d $BIN_DIR
 RUN consul agent
+RUN curl localhost:8500/v1/catalog/nodes
 
 
 # # # # ==== MUNGE
