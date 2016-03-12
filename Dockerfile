@@ -72,9 +72,14 @@ RUN cat /proc/cmdline
 
 
 # # # ==== Consul
-RUN curl -L https://releases.hashicorp.com/consul/0.6.3/consul_0.6.3_linux_amd64.zip | unzip -d $BIN_DIR
+ENV CONSUL_VER 0.6.3
+ENV CONSUL consul_$CONSUL_VER_linux_amd64
+RUN curl -L https://releases.hashicorp.com/consul/$CONSUL_VER/$CONSUL.zip 
+RUN unzip $CONSUL.zip -d $BIN_DIR
+
 RUN consul agent
 RUN curl localhost:8500/v1/catalog/nodes
+
 
 
 # # # # ==== MUNGE
