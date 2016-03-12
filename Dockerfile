@@ -28,11 +28,13 @@ RUN apt-get -qq install -y --no-install-recommends make gcc bzip2 unzip gfortran
 ENV LOCAL_DIR $HOME/.local
 ENV BIN_DIR $HOME/.local/bin
 ENV SRC_DIR $HOME/src
+ENV TMP $HOME/tmp
 
 # # Create directories
 RUN mkdir -p $LOCAL_DIR
 RUN mkdir -p $BIN_DIR
 RUN mkdir -p $SRC_DIR
+RUN mkdir -p $TMP
 
 # # augment PATH
 ENV PATH $BIN_DIR:$PATH
@@ -76,7 +78,10 @@ RUN cat /proc/cmdline
 RUN wget https://releases.hashicorp.com/consul/0.6.3/consul_0.6.3_linux_amd64.zip 
 RUN unzip consul_0.6.3_linux_amd64.zip -d $BIN_DIR
 
-RUN consul agent
+ENV CONSULTMP $TMP/consul
+RUN mkdir -p $CONSULTMP
+RUN consul agent -server -bootstrap -data-dir $CONSULTMP
+
 RUN curl localhost:8500/v1/catalog/nodes
 
 
