@@ -5,12 +5,12 @@ FROM debian:7.7
 RUN apt-get update
 
 # # TLS-related
-RUN apt-get install -y --no-install-recommends ca-certificates debian-keyring debian-archive-keyring
-RUN apt-key update
-RUN apt-get update
+RUN apt-get -qq install -y --no-install-recommends ca-certificates debian-keyring debian-archive-keyring
+RUN apt-key -qq update
+RUN apt-get -qq update
 
 # # Install tools
-RUN apt-get install -y --no-install-recommends make gcc bzip2 gfortran wget curl python pkg-config perl
+RUN apt-get -qq install -y --no-install-recommends make gcc bzip2 gfortran wget curl python pkg-config perl
 
 # # kernel stuff (?)
 # RUN apt-get install linux-headers-$(uname -r)
