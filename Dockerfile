@@ -72,10 +72,9 @@ RUN cat /proc/cmdline
 
 
 # # # ==== Consul
-ENV CONSULV 0.6.3
-# ENV CONSUL consul_$CONSULV_linux_amd64
-RUN wget https://releases.hashicorp.com/consul/$CONSULV/consul_$CONSULV_linux_amd64.zip 
-RUN unzip $CONSUL.zip -d $BIN_DIR
+
+RUN wget https://releases.hashicorp.com/consul/0.6.3/consul_0.6.3_linux_amd64.zip 
+RUN unzip consul_0.6.3_linux_amd64.zip -d $BIN_DIR
 
 RUN consul agent
 RUN curl localhost:8500/v1/catalog/nodes
