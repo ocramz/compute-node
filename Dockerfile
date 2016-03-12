@@ -35,6 +35,7 @@ RUN ls -lsA $HOME
 RUN cat /proc/cmdline
 
 ENV KERNEL_PATH /boot/
+ENV KERNEL vmlinuz-3.19.0-30-generic
 # # kernel : /boot/vmlinuz-3.19.0-30-generic
 
 
@@ -42,7 +43,7 @@ ENV KERNEL_PATH /boot/
 
 ENV BLCR_VER 0.8.5
 
-RUN wget http://crd.lbl.gov/assets/Uploads/FTG/Projects/CheckpointRestart/downloads/blcr-$BLCR_VER.tar.gz && tar zxf blcr-$BLCR_VER.tar.gz && cd blcr-$BLCR_VER && mkdir builddir && cd builddir && ../configure --with-linux=$KERNEL_PATH && make && make install && make insmod check
+RUN wget http://crd.lbl.gov/assets/Uploads/FTG/Projects/CheckpointRestart/downloads/blcr-$BLCR_VER.tar.gz && tar zxf blcr-$BLCR_VER.tar.gz && cd blcr-$BLCR_VER && mkdir builddir && cd builddir && ../configure --with-linux=$KERNEL && make && make install && make insmod check
 
 # # ====> NB!!! : BLCR kernel modules should be loaded with `insmod` for BLCR to work, see https://upc-bugs.lbl.gov/blcr/doc/html/BLCR_Admin_Guide.html
 
