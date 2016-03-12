@@ -33,7 +33,8 @@ RUN ls -lsA $HOME
 # # where is the kernel ? (NB: / means /boot/ in this case)
 RUN cat /proc/cmdline
 
-ENV KERNEL_PATH /boot/vmlinuz-3.19.0-30-generic
+ENV KERNEL_PATH /boot/
+# # kernel : /boot/vmlinuz-3.19.0-30-generic
 
 
 # # BLCR (checkpoint/restart for MPI libraries)
