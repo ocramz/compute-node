@@ -9,10 +9,10 @@ RUN apt-get install -y --no-install-recommends ca-certificates debian-keyring de
 RUN apt-key update
 RUN apt-get update
 
-# # Install tools.
+# # Install tools
 RUN apt-get install -y --no-install-recommends make gcc bzip2 gfortran wget curl python pkg-config perl
 
-# # kernel stuff
+# # kernel stuff (?)
 # RUN apt-get install -y --no-install-recommends kernel-devel kernel-headers
 
 
@@ -30,16 +30,17 @@ RUN mkdir -p $SRC_DIR
 RUN printenv | grep DIR
 RUN ls -lsA $HOME
 
-# # where is the kernel ?
+# # where is the kernel ? (NB: / means /boot/ in this case)
 RUN cat /proc/cmdline
 
+ENV KERNEL_PATH /boot/vmlinuz-3.19.0-30-generic
 
 
 # # BLCR (checkpoint/restart for MPI libraries)
 
 ENV BLCR_VER 0.8.5
 
-RUN wget http://crd.lbl.gov/assets/Uploads/FTG/Projects/CheckpointRestart/downloads/blcr-$BLCR_VER.tar.gz && tar zxf blcr-$BLCR_VER.tar.gz && cd blcr-$BLCR_VER && mkdir builddir && cd builddir && ../configure && make && make install && make insmod check
+RUN wget http://crd.lbl.gov/assets/Uploads/FTG/Projects/CheckpointRestart/downloads/blcr-$BLCR_VER.tar.gz && tar zxf blcr-$BLCR_VER.tar.gz && cd blcr-$BLCR_VER && mkdir builddir && cd builddir && ../configure --with-linux=$KERNEL_PATH && make && make install && make insmod check
 
 # # ====> NB!!! : BLCR kernel modules should be loaded with `insmod` for BLCR to work, see https://upc-bugs.lbl.gov/blcr/doc/html/BLCR_Admin_Guide.html
 
