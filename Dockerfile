@@ -6,15 +6,22 @@ RUN apt-get update
 
 # # TLS-related
 RUN apt-get -qq install -y --no-install-recommends ca-certificates debian-keyring debian-archive-keyring
-RUN apt-key -qq update
+RUN apt-key update
 RUN apt-get -qq update
 
 # # Install tools
 RUN apt-get -qq install -y --no-install-recommends make gcc bzip2 gfortran wget curl python pkg-config perl
 
-# # kernel stuff (?)
+# # ==== kernel stuff
 # RUN apt-get install linux-headers-$(uname -r)
 # RUN apt-get install -y --no-install-recommends kernel-devel kernel-headers
+
+# # recompile kernel with original configuration:
+# # 1. copy config
+RUN cp /boot/config-`uname -r` /usr/src/linux-`uname -r`/.config
+# # 2.
+RUN cp /lib/modules/`uname -r`/build/Makefile /usr/src/linux-`uname -r`
+RUN make
 
 
 # # Set up environment variables
