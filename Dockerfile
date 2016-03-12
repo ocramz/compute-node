@@ -29,6 +29,19 @@ RUN ls -lsA $HOME
 
 
 
+
+# # BLCR (checkpoint/restart for MPI libraries)
+
+ENV BLCR_VER 0.8.5
+
+RUN wget http://crd.lbl.gov/assets/Uploads/FTG/Projects/CheckpointRestart/downloads/blcr-$BLCR_VER.tar.gz && tar zxf blcr-$BLCR_VER.tar.gz && cd blcr-$BLCR_VER && mkdir builddir && cd builddir && ../configure && make && make install && make insmod check
+
+# # ====> NB!!! : BLCR kernel modules should be loaded with `insmod` for BLCR to work, see https://upc-bugs.lbl.gov/blcr/doc/html/BLCR_Admin_Guide.html
+
+
+
+
+
 # # install SLURM and MUNGE
 RUN apt-get install -y --no-install-recommends libmunge-dev libmunge2 munge
 
