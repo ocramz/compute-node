@@ -41,58 +41,63 @@ RUN ls -lsA $HOME
 # # where is the kernel ? (NB: / means /boot/ in this case)
 RUN cat /proc/cmdline
 
+# # == find dependencies for BLCR
+RUN find ~ -name version.h
+RUN find ~ -name vmlinux
+
+
+
 # ENV KERNEL_PATH /boot
 # ENV KERNEL vmlinuz-3.19.0-30-generic
 # # kernel : /boot/vmlinuz-3.19.0-30-generic
 
 
-# # ==== Consul
-RUN wget https://releases.hashicorp.com/consul/0.6.3/consul_0.6.3_linux_amd64.zip
 
 
 
-# # ==== BLCR (checkpoint/restart for MPI libraries)
 
-# from APT
-RUN apt-get install -y --no-install-recommends blcr
+# # # ==== BLCR (checkpoint/restart for MPI libraries)
 
 # ENV BLCR_VER 0.8.5
 
-# # from RPM
-# RUN wget http://crd.lbl.gov/assets/Uploads/FTG/Projects/CheckpointRestart/downloads/blcr-$BLCR_VER-1.src.rpm
-# RUN alien -i blcr_$SRC_VER-1.src.rpm
+# # # # from RPM
+# # RUN wget http://crd.lbl.gov/assets/Uploads/FTG/Projects/CheckpointRestart/downloads/blcr-$BLCR_VER-1.src.rpm
+# # RUN alien -i blcr_$SRC_VER-1.src.rpm
 
-# # from source 
+# # # from source 
 # RUN wget http://crd.lbl.gov/assets/Uploads/FTG/Projects/CheckpointRestart/downloads/blcr-$BLCR_VER.tar.gz && tar zxf blcr-$BLCR_VER.tar.gz && cd blcr-$BLCR_VER && mkdir builddir && cd builddir && ../configure --with-linux=$KERNEL_PATH && make && make install && make insmod check
 
-# # => NB!!! : BLCR kernel modules should be loaded with `insmod` for BLCR to work, see https://upc-bugs.lbl.gov/blcr/doc/html/BLCR_Admin_Guide.html
+# # # => NB!!! : BLCR kernel modules should be loaded with `insmod` for BLCR to work, see https://upc-bugs.lbl.gov/blcr/doc/html/BLCR_Admin_Guide.html
 
 
 
-
-
-# # ==== MUNGE
-RUN apt-get install -y --no-install-recommends libmunge-dev libmunge2 munge
-
-# # add MUNGE RSA key
-ADD munge.key /etc/munge/
-
-
-# # ==== SLURM
-RUN apt-get install -y --no-install-recommends slurm-llnl
+# # # ==== Consul
+# RUN wget https://releases.hashicorp.com/consul/0.6.3/consul_0.6.3_linux_amd64.zip
 
 
 
-# # clean local package archive
-RUN apt-get clean
+# # # ==== MUNGE
+# RUN apt-get install -y --no-install-recommends libmunge-dev libmunge2 munge
+
+# # # add MUNGE RSA key
+# ADD munge.key /etc/munge/
+
+
+# # # ==== SLURM
+# RUN apt-get install -y --no-install-recommends slurm-llnl
 
 
 
-# # test MUNGE
+# # # clean local package archive
+# RUN apt-get clean
 
-# RUN /usr/sbin/munged
 
-# RUN munge -n | unmunge
+
+# # # test MUNGE
+
+# # RUN /usr/sbin/munged
+
+# # RUN munge -n | unmunge
 
 # RUN remunge
 
