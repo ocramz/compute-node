@@ -94,7 +94,7 @@ RUN unzip consul_0.6.3_linux_amd64.zip -d $BIN_DIR
 RUN apt-get install -y --no-install-recommends libmunge-dev libmunge2 munge
 
 # # # add MUNGE RSA key
-ADD munge.key /etc/munge/
+# ADD munge.key /etc/munge/
 
 
 # # # ==== SLURM
