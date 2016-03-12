@@ -34,16 +34,21 @@ RUN ls -lsA $HOME
 # # where is the kernel ? (NB: / means /boot/ in this case)
 RUN cat /proc/cmdline
 
-ENV KERNEL_PATH /boot/
+ENV KERNEL_PATH /boot
 ENV KERNEL vmlinuz-3.19.0-30-generic
 # # kernel : /boot/vmlinuz-3.19.0-30-generic
+
+
+# # Consul
+wget https://releases.hashicorp.com/consul/0.6.3/consul_0.6.3_linux_amd64.zip
+
 
 
 # # BLCR (checkpoint/restart for MPI libraries)
 
 ENV BLCR_VER 0.8.5
 
-RUN wget http://crd.lbl.gov/assets/Uploads/FTG/Projects/CheckpointRestart/downloads/blcr-$BLCR_VER.tar.gz && tar zxf blcr-$BLCR_VER.tar.gz && cd blcr-$BLCR_VER && mkdir builddir && cd builddir && ../configure --with-linux=$KERNEL && make && make install && make insmod check
+RUN wget http://crd.lbl.gov/assets/Uploads/FTG/Projects/CheckpointRestart/downloads/blcr-$BLCR_VER.tar.gz && tar zxf blcr-$BLCR_VER.tar.gz && cd blcr-$BLCR_VER && mkdir builddir && cd builddir && ../configure --with-linux=$KERNEL_PATH && make && make install && make insmod check
 
 # # ====> NB!!! : BLCR kernel modules should be loaded with `insmod` for BLCR to work, see https://upc-bugs.lbl.gov/blcr/doc/html/BLCR_Admin_Guide.html
 
