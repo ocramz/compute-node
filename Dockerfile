@@ -10,7 +10,10 @@ RUN apt-key update
 RUN apt-get update
 
 # # Install tools.
-RUN apt-get install -y --no-install-recommends make gcc bzip2 gfortran wget curl python pkg-config
+RUN apt-get install -y --no-install-recommends make gcc bzip2 gfortran wget curl python pkg-config perl
+
+# # kernel stuff
+RUN apt=get install -y --no-install-recommends kernel-devel kernel-headers
 
 
 # # Set up environment variables
@@ -27,6 +30,8 @@ RUN mkdir -p $SRC_DIR
 RUN printenv | grep DIR
 RUN ls -lsA $HOME
 
+# # where is the kernel ?
+RUN cat /proc/cmdline
 
 
 
