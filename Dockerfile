@@ -34,11 +34,16 @@ RUN mkdir -p $LOCAL_DIR
 RUN mkdir -p $BIN_DIR
 RUN mkdir -p $SRC_DIR
 
+# # augment PATH
+ENV PATH $BIN_DIR:$PATH
+
+
 # # check env
 RUN printenv | grep DIR
 RUN ls -lsA $HOME
 # # where is the kernel ? 
 RUN cat /proc/cmdline
+
 
 # # # == BLCR dependencies
 # RUN find ~ -name version.h
@@ -67,24 +72,26 @@ RUN cat /proc/cmdline
 
 
 # # # ==== Consul
-RUN curl -L https://releases.hashicorp.com/consul/0.6.3/consul_0.6.3_linux_amd64.zip | tar xz
+RUN curl -L https://releases.hashicorp.com/consul/0.6.3/consul_0.6.3_linux_amd64.zip | tar xz -C $BIN_DIR
+RUN consul agent
 
 
+# # # # ==== MUNGE
+# RUN apt-get install -y --no-install-recommends libmunge-dev libmunge2 munge
 
-# # # ==== MUNGE
-RUN apt-get install -y --no-install-recommends libmunge-dev libmunge2 munge
-
-# # # add MUNGE RSA key
-ADD munge.key /etc/munge/
+# # # # add MUNGE RSA key
+# ADD munge.key /etc/munge/
 
 
-# # # ==== SLURM
-RUN apt-get install -y --no-install-recommends slurm-llnl
+# # # # ==== SLURM
+# RUN apt-get install -y --no-install-recommends slurm-llnl
+
+
 
 
 
 # # # clean local package archive
-# RUN apt-get clean
+RUN apt-get clean
 
 
 
