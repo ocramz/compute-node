@@ -29,12 +29,18 @@ ENV LOCAL_DIR $HOME/.local
 ENV BIN_DIR $HOME/.local/bin
 ENV SRC_DIR $HOME/src
 ENV TMP $HOME/tmp
+ENV CONSULTMP $TMP/consul
+ENV ETC $HOME/etc
 
 # # Create directories
 RUN mkdir -p $LOCAL_DIR
 RUN mkdir -p $BIN_DIR
 RUN mkdir -p $SRC_DIR
 RUN mkdir -p $TMP
+RUN mkdir -p $ETC
+
+RUN mkdir -p $CONSULTMP
+RUN mkdir -p $ETC/consul.d
 
 # # augment PATH
 ENV PATH $BIN_DIR:$PATH
@@ -78,23 +84,21 @@ RUN cat /proc/cmdline
 RUN wget https://releases.hashicorp.com/consul/0.6.3/consul_0.6.3_linux_amd64.zip 
 RUN unzip consul_0.6.3_linux_amd64.zip -d $BIN_DIR
 
-ENV CONSULTMP $TMP/consul
-RUN mkdir -p $CONSULTMP
-RUN consul agent -server -bootstrap -data-dir $CONSULTMP
-
-RUN curl localhost:8500/v1/catalog/nodes
+# # test Consul (NB: stop with C-c)
+# RUN consul agent -server -bootstrap -data-dir $CONSULTMP
+# RUN curl localhost:8500/v1/catalog/nodes
 
 
 
-# # # # ==== MUNGE
-# RUN apt-get install -y --no-install-recommends libmunge-dev libmunge2 munge
+# # # ==== MUNGE
+RUN apt-get install -y --no-install-recommends libmunge-dev libmunge2 munge
 
-# # # # add MUNGE RSA key
-# ADD munge.key /etc/munge/
+# # # add MUNGE RSA key
+ADD munge.key /etc/munge/
 
 
-# # # # ==== SLURM
-# RUN apt-get install -y --no-install-recommends slurm-llnl
+# # # ==== SLURM
+RUN apt-get install -y --no-install-recommends slurm-llnl
 
 
 
