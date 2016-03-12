@@ -13,6 +13,7 @@ RUN apt-get update
 RUN apt-get install -y --no-install-recommends make gcc bzip2 gfortran wget curl python pkg-config perl
 
 # # kernel stuff (?)
+# RUN apt-get install linux-headers-$(uname -r)
 # RUN apt-get install -y --no-install-recommends kernel-devel kernel-headers
 
 
