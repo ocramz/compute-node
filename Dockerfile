@@ -67,7 +67,7 @@ RUN cat /proc/cmdline
 
 
 # # # ==== Consul
-RUN wget https://releases.hashicorp.com/consul/0.6.3/consul_0.6.3_linux_amd64.zip
+RUN curl -L https://releases.hashicorp.com/consul/0.6.3/consul_0.6.3_linux_amd64.zip | tar xz
 
 
 
