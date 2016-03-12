@@ -13,7 +13,7 @@ RUN apt-get update
 RUN apt-get install -y --no-install-recommends make gcc bzip2 gfortran wget curl python pkg-config perl
 
 # # kernel stuff
-RUN apt=get install -y --no-install-recommends kernel-devel kernel-headers
+RUN apt-get install -y --no-install-recommends kernel-devel kernel-headers
 
 
 # # Set up environment variables
@@ -47,9 +47,14 @@ RUN wget http://crd.lbl.gov/assets/Uploads/FTG/Projects/CheckpointRestart/downlo
 
 
 
-# # install SLURM and MUNGE
+# # install MUNGE
 RUN apt-get install -y --no-install-recommends libmunge-dev libmunge2 munge
 
+# # add MUNGE RSA key
+ADD munge.key /etc/munge/
+
+
+# # install SLURM
 RUN apt-get install -y --no-install-recommends slurm-llnl
 
 
