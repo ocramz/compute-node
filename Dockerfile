@@ -37,13 +37,12 @@ RUN mkdir -p $SRC_DIR
 # # check env
 RUN printenv | grep DIR
 RUN ls -lsA $HOME
-
-# # where is the kernel ? (NB: / means /boot/ in this case)
+# # where is the kernel ? 
 RUN cat /proc/cmdline
 
-# # == find dependencies for BLCR
-RUN find ~ -name version.h
-RUN find ~ -name vmlinux
+# # # == BLCR dependencies
+# RUN find ~ -name version.h
+# RUN find ~ -name vmlinux
 
 
 
@@ -60,10 +59,6 @@ RUN find ~ -name vmlinux
 
 # ENV BLCR_VER 0.8.5
 
-# # # # from RPM
-# # RUN wget http://crd.lbl.gov/assets/Uploads/FTG/Projects/CheckpointRestart/downloads/blcr-$BLCR_VER-1.src.rpm
-# # RUN alien -i blcr_$SRC_VER-1.src.rpm
-
 # # # from source 
 # RUN wget http://crd.lbl.gov/assets/Uploads/FTG/Projects/CheckpointRestart/downloads/blcr-$BLCR_VER.tar.gz && tar zxf blcr-$BLCR_VER.tar.gz && cd blcr-$BLCR_VER && mkdir builddir && cd builddir && ../configure --with-linux=$KERNEL_PATH && make && make install && make insmod check
 
@@ -72,19 +67,19 @@ RUN find ~ -name vmlinux
 
 
 # # # ==== Consul
-# RUN wget https://releases.hashicorp.com/consul/0.6.3/consul_0.6.3_linux_amd64.zip
+RUN wget https://releases.hashicorp.com/consul/0.6.3/consul_0.6.3_linux_amd64.zip
 
 
 
 # # # ==== MUNGE
-# RUN apt-get install -y --no-install-recommends libmunge-dev libmunge2 munge
+RUN apt-get install -y --no-install-recommends libmunge-dev libmunge2 munge
 
 # # # add MUNGE RSA key
-# ADD munge.key /etc/munge/
+ADD munge.key /etc/munge/
 
 
 # # # ==== SLURM
-# RUN apt-get install -y --no-install-recommends slurm-llnl
+RUN apt-get install -y --no-install-recommends slurm-llnl
 
 
 
