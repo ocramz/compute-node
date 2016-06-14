@@ -1,6 +1,7 @@
 # # compute-node : a generic compute node image using Slurm and Munge
 
-FROM debian:7.7
+# FROM debian:7.7
+FROM phusion/baseimage
 
 RUN apt-get update
 
