@@ -81,12 +81,18 @@ RUN cat /proc/cmdline
 
 # # # ==== Consul
 
+ENV CONSUL_VER 0.6.3
+
 RUN wget https://releases.hashicorp.com/consul/0.6.3/consul_0.6.3_linux_amd64.zip 
 RUN unzip consul_0.6.3_linux_amd64.zip -d $BIN_DIR
+
+RUN consul --version
 
 # # test Consul (NB: stop with C-c)
 # RUN consul agent -server -bootstrap -data-dir $CONSULTMP
 # RUN curl localhost:8500/v1/catalog/nodes
+
+
 
 
 
@@ -95,6 +101,9 @@ RUN apt-get install -y --no-install-recommends libmunge-dev libmunge2 munge
 
 # # # add MUNGE RSA key
 # ADD munge.key /etc/munge/
+
+
+
 
 
 # # # ==== SLURM
