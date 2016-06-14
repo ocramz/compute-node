@@ -1,20 +1,25 @@
-ACCOUNT = ""
+ACCOUNT = ocramz
+PROJECT = compute-node
+TAG = $(ACCOUNT)/$(PROJECT)
 
 .DEFAULT_GOAL := help
 
 help:
-	@echo "Use \`make <target> [ACCOUNT=<accountname>]' where <accountname> is"
-	@echo "your docker account name and <target> is one of"
+	@echo "Use \`make <target>\` where <target> is one of"
 	@echo "  help     to display this help message"
 	@echo "  build    to build the docker image"
+	@echo "  rebuild  '', ignoring previous builds"
 	@echo "  login    to login to your docker account"
 	@echo "  push     to push the image to the docker registry"
 
 build:
-	docker build -t $(ACCOUNT)/compute-node .
+	docker build -t $(TAG) .
+
+rebuild:
+	docker build -no-cache -t $(TAG) .
 
 login:
 	docker login -u $(ACCOUNT)
 
-push: image login
-	docker push $(ACCOUNT)/compute-node
+push: build login
+	docker push $(TAG)

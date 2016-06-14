@@ -30,7 +30,8 @@ ENV LOCAL_DIR $HOME/.local
 ENV BIN_DIR $HOME/.local/bin
 ENV SRC_DIR $HOME/src
 ENV TMP $HOME/tmp
-ENV CONSULTMP $TMP/consul
+# ENV CONSULTMP $TMP/consul
+ENV CERTS_DIR $HOME/.certs
 ENV ETC $HOME/etc
 
 # # Create directories
@@ -40,7 +41,8 @@ RUN mkdir -p $SRC_DIR
 RUN mkdir -p $TMP
 RUN mkdir -p $ETC
 
-RUN mkdir -p $CONSULTMP
+# RUN mkdir -p $CONSULTMP
+RUN mkdir -p $CERTS_DIR
 RUN mkdir -p $ETC/consul.d
 
 # # augment PATH
@@ -80,14 +82,14 @@ RUN cat /proc/cmdline
 
 
 
-# # # ==== Consul
+# # # # ==== Consul
 
-ENV CONSUL_VER 0.6.3
+# ENV CONSUL_VER 0.6.3
 
-RUN wget https://releases.hashicorp.com/consul/0.6.3/consul_0.6.3_linux_amd64.zip 
-RUN unzip consul_0.6.3_linux_amd64.zip -d $BIN_DIR
+# RUN wget https://releases.hashicorp.com/consul/0.6.3/consul_0.6.3_linux_amd64.zip 
+# RUN unzip consul_0.6.3_linux_amd64.zip -d $BIN_DIR
 
-RUN consul --version
+# RUN consul --version
 
 # # test Consul (NB: stop with C-c)
 # RUN consul agent -server -bootstrap -data-dir $CONSULTMP
