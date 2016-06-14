@@ -8,10 +8,16 @@ RUN apt-get update
 # # TLS-related
 RUN apt-get -qq install -y --no-install-recommends ca-certificates debian-keyring debian-archive-keyring
 RUN apt-key update
-RUN apt-get -qq update
+
 
 # # Install tools
-RUN apt-get -qq install -y --no-install-recommends make gcc bzip2 unzip gfortran wget curl python pkg-config perl
+RUN apt-get -qq update && \
+    apt-get -qq install -y --no-install-recommends make gcc bzip2 unzip gfortran \
+                                                   wget curl python pkg-config perl\
+						   libmunge-dev libmunge2 munge\
+						   slurm-llnl && \
+    apt-get clean
+						   
 
 # # # ==== kernel stuff
 # # RUN apt-get install linux-headers-$(uname -r)
@@ -100,7 +106,6 @@ RUN cat /proc/cmdline
 
 
 # # # ==== MUNGE
-RUN apt-get install -y --no-install-recommends libmunge-dev libmunge2 munge
 
 # # # add MUNGE RSA key
 # ADD munge.key /etc/munge/
@@ -110,14 +115,11 @@ RUN apt-get install -y --no-install-recommends libmunge-dev libmunge2 munge
 
 
 # # # ==== SLURM
-RUN apt-get install -y --no-install-recommends slurm-llnl
-
 
 
 
 
 # # # clean local package archive
-RUN apt-get clean
 
 
 
