@@ -87,6 +87,19 @@ RUN cat /proc/cmdline
 
 
 
+# # # configuration
+
+ADD etc/supervisord.d/slurmd.ini /etc/supervisord.d/
+ADD etc/consul.d/slurmd.json /etc/consul.d/
+
+
+# # # slurmd health check scripts
+
+ADD /opt/slurm/bin/check_slurmd.sh /opt/slurm/bin/
+ADD /opt/slurm/bin/restart.sh /opt/slurm/bin/
+
+
+
 # # # === expose TCP/IP ports
 
 EXPOSE 22
