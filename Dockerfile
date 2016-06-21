@@ -8,7 +8,7 @@ FROM ocramz/docker-phusion-supervisor
 
 # # update TLS-related stuff and install tools
 RUN apt-get update && \
-    apt-get -qq install -y --no-install-recommends ca-certificates debian-keyring debian-archive-keyring &&
+    apt-get -qq install -y --no-install-recommends ca-certificates debian-keyring debian-archive-keyring && \
     apt-key update && \
     apt-get -qq update && \
     apt-get -qq install -y --no-install-recommends make gcc bzip2 unzip gfortran \
