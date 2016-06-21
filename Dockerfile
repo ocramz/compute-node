@@ -31,24 +31,20 @@ RUN apt-get update && \
 
 
 # # Set up environment variables
-ENV LOCAL_DIR $HOME/.local
-ENV BIN_DIR $HOME/.local/bin
+ENV BIN_DIR $HOME/bin
 ENV SRC_DIR $HOME/src
 ENV TMP $HOME/tmp
-# ENV CONSULTMP $TMP/consul
 ENV CERTS_DIR $HOME/.certs
 ENV ETC $HOME/etc
 
 # # Create directories
-RUN mkdir -p $LOCAL_DIR
 RUN mkdir -p $BIN_DIR
 RUN mkdir -p $SRC_DIR
 RUN mkdir -p $TMP
+RUN mkdir -p $CERTS_DIR
 RUN mkdir -p $ETC
 
-# RUN mkdir -p $CONSULTMP
-RUN mkdir -p $CERTS_DIR
-RUN mkdir -p $ETC/consul.d
+
 
 # # augment PATH
 ENV PATH $BIN_DIR:$PATH
@@ -87,18 +83,7 @@ RUN cat /proc/cmdline
 
 
 
-# # # # ==== Consul
 
-# ENV CONSUL_VER 0.6.3
-
-# RUN wget https://releases.hashicorp.com/consul/0.6.3/consul_0.6.3_linux_amd64.zip 
-# RUN unzip consul_0.6.3_linux_amd64.zip -d $BIN_DIR
-
-# RUN consul --version
-
-# # test Consul (NB: stop with C-c)
-# RUN consul agent -server -bootstrap -data-dir $CONSULTMP
-# RUN curl localhost:8500/v1/catalog/nodes
 
 
 
@@ -138,5 +123,5 @@ RUN cat /proc/cmdline
 # # # === expose TCP/IP ports
 
 EXPOSE 22
-EXPOSE 80
-EXPOSE 2375  # 2376 for TLS
+# 2376 for TLS
+EXPOSE 2375  
