@@ -1,7 +1,11 @@
 # # compute-node : a generic compute node image using Slurm and Munge
 
-# FROM debian:7.7
-FROM phusion/baseimage
+# # `docker-phusion-supervisor` contains:
+# # * supervisord
+# # * consul-template
+
+FROM ocramz/docker-phusion-supervisor
+
 
 RUN apt-get update
 
@@ -132,3 +136,12 @@ RUN cat /proc/cmdline
 # RUN remunge
 
 
+
+
+
+
+# # # === expose TCP/IP ports
+
+EXPOSE 22
+EXPOSE 80
+EXPOSE 2375  # 2376 for TLS
