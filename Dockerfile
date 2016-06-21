@@ -6,16 +6,11 @@
 
 FROM ocramz/docker-phusion-supervisor
 
-
-RUN apt-get update
-
-# # TLS-related
-RUN apt-get -qq install -y --no-install-recommends ca-certificates debian-keyring debian-archive-keyring
-RUN apt-key update
-
-
-# # Install tools
-RUN apt-get -qq update && \
+# # update TLS-related stuff and install tools
+RUN apt-get update && \
+    apt-get -qq install -y --no-install-recommends ca-certificates debian-keyring debian-archive-keyring &&
+    apt-key update && \
+    apt-get -qq update && \
     apt-get -qq install -y --no-install-recommends make gcc bzip2 unzip gfortran \
                                                    wget curl python pkg-config perl\
 						   libmunge-dev libmunge2 munge\
