@@ -4,50 +4,22 @@
 # # * supervisord
 # # * consul-template
 
-FROM ocramz/docker-phusion-supervisor
+# # `compute-master-node` inherits from `docker-phusion-supervisor` and adds:
+# # * munge, libmunge2, libmunge-dev
+# # * slurm-llnl
+
+FROM ocramz/compute-master-node
 
 # # update TLS-related stuff and install tools
 RUN apt-get update && \
     apt-get -qq install -y --no-install-recommends ca-certificates debian-keyring debian-archive-keyring && \
     apt-key update && \
     apt-get -qq update && \
-    apt-get -qq install -y --no-install-recommends make gcc bzip2 unzip gfortran \
-                                                   wget curl python pkg-config perl\
-						   libmunge-dev libmunge2 munge\
-						   slurm-llnl && \
+    apt-get -qq install -y --no-install-recommends gcc gfortran python pkg-config perl && \
     apt-get clean
 						   
 
-# # # ==== kernel stuff
-# # RUN apt-get install linux-headers-$(uname -r)
-# # RUN apt-get install -y --no-install-recommends kernel-devel kernel-headers
 
-# # # recompile kernel with original configuration:
-# # # 1. copy config
-# RUN cp /boot/config-`uname -r` /usr/src/linux-`uname -r`/.config
-# # # 2.
-# RUN cp /lib/modules/`uname -r`/build/Makefile /usr/src/linux-`uname -r`
-# RUN make
-
-
-# # Set up environment variables
-ENV BIN_DIR $HOME/bin
-ENV SRC_DIR $HOME/src
-ENV TMP $HOME/tmp
-ENV CERTS_DIR $HOME/.certs
-ENV ETC $HOME/etc
-
-# # Create directories
-RUN mkdir -p $BIN_DIR
-RUN mkdir -p $SRC_DIR
-RUN mkdir -p $TMP
-RUN mkdir -p $CERTS_DIR
-RUN mkdir -p $ETC
-
-
-
-# # augment PATH
-ENV PATH $BIN_DIR:$PATH
 
 
 # # check env
@@ -62,10 +34,6 @@ RUN cat /proc/cmdline
 # RUN find ~ -name vmlinux
 
 
-
-# ENV KERNEL_PATH /boot
-# ENV KERNEL vmlinuz-3.19.0-30-generic
-# # kernel : /boot/vmlinuz-3.19.0-30-generic
 
 
 
@@ -103,7 +71,6 @@ RUN cat /proc/cmdline
 
 
 
-# # # clean local package archive
 
 
 
@@ -124,4 +91,10 @@ RUN cat /proc/cmdline
 
 EXPOSE 22
 # 2376 for TLS
-EXPOSE 2375  
+EXPOSE 2375
+
+
+WORKDIR $HOME
+
+# # # clean local package archive
+RUN apt-get clean
