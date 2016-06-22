@@ -90,6 +90,7 @@ RUN cat /proc/cmdline
 # # # configuration
 
 ADD etc/supervisord.d/slurmd.ini /etc/supervisord.d/
+
 ADD etc/consul.d/slurmd.json /etc/consul.d/
 
 
