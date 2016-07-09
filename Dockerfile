@@ -13,11 +13,8 @@ FROM ocramz/compute-master-node
 ENV USER mpirun
 
 # ------------------------------------------------------------
-# Add an 'mpirun' user
+# user 'mpirun' was created in compute-master-node
 # ------------------------------------------------------------
-
-RUN adduser --disabled-password --gecos "" ${USER} && \
-    echo "${USER} ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 
 
 ENV HOME /home/${USER}
