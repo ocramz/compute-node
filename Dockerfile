@@ -10,6 +10,38 @@
 
 FROM ocramz/compute-master-node
 
+ENV USER mpirun
+
+# ------------------------------------------------------------
+# Add an 'mpirun' user
+# ------------------------------------------------------------
+
+RUN adduser --disabled-password --gecos "" ${USER} && \
+    echo "${USER} ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+
+
+ENV HOME /home/${USER}
+
+# # # environment variables misc.
+ENV BIN_DIR=${HOME}/bin \
+    SRC_DIR=${HOME}/src \
+    TMP=${HOME}/tmp \
+    SSHDIR=${HOME}/.ssh \
+    ETC=${HOME}/etc
+
+# # augment PATH
+ENV PATH $BIN_DIR:$PATH
+
+# # # Create directories
+RUN mkdir -p $BIN_DIR && \
+    mkdir -p $SRC_DIR && \
+    mkdir -p $TMP && \
+    mkdir -p $ETC && \
+    mkdir -p $SSHDIR && \
+    mkdir -p $HOME/bin
+
+
+
 # # update TLS-related stuff and install tools
 RUN apt-get update && \
     apt-get -qq install -y --no-install-recommends ca-certificates debian-keyring debian-archive-keyring && \
@@ -18,7 +50,6 @@ RUN apt-get update && \
     apt-get -qq install -y --no-install-recommends gcc gfortran python pkg-config perl && \
     apt-get clean
 						   
-
 
 
 
